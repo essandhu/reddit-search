@@ -1,0 +1,60 @@
+header {
+    display: flex;
+    justify-content: space-between; /* Space between the logo and search form */
+    align-items: center; /* Center items vertically */
+    background-color: rgb(0, 0, 150); /* Navy blue background */
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding around the header */
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+}
+  
+header .logo img {
+    width: 5em; 
+    margin-right: 1em; /* Space between logo image and text */
+}
+  
+header .logo h1 {
+    margin: 0; /* Remove default margin */
+    font-size: 3em; 
+}
+
+.search-form {
+    display: flex;
+    gap: 10px; /* Space between input and button */
+  }
+  
+  .search-form input[type="text"] {
+    padding: 5px;
+    font-size: 16px; 
+    border: none; /* No border */
+    min-width: 300px; /* Minimum width */
+  }
+  
+  .search-form button {
+    padding: 5px 10px;
+    background-color: #0056b3; /* Darker blue for contrast */
+    color: white;
+    border: none;
+    font-size: 16px; 
+    cursor: pointer;
+  }
+  
+  .search-form button:hover {
+    background-color: #004080; /* Even darker blue on hover */
+  }
+
+  @media (max-width: 600px) {
+    header {
+      flex-direction: column; /* Stack logo and search form */
+    }
+  
+    .search-form input[type="text"] {
+      width: 100%; /* Full width on smaller screens */
+      min-width: auto; /* Override minimum width */
+    }
+  }
+  
