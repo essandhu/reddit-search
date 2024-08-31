@@ -1,25 +1,31 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Card from '../../components/card/Card';
-import { fetchSubreddits, selectSubreddits } from '../../features/reddit/subredditSlice';
-import './Subreddits.css';
-import { setCurSubreddit, selectCurSubreddit, setSearchTerm } from '../../features/reddit/redditSlice';
-import defaultSubredditImage from '../../images/reddit-alien.png';
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import Card from "../../components/card/Card"
+import {
+  fetchSubreddits,
+  selectSubreddits,
+} from "../../features/reddit/subredditSlice"
+import "./Subreddits.css"
+import {
+  setCurSubreddit,
+  selectCurSubreddit,
+} from "../../features/reddit/redditSlice"
+import defaultSubredditImage from "../../images/reddit-alien.png"
 
 const Subreddits = () => {
-  const dispatch = useDispatch<any>();
-  const subreddits = useSelector(selectSubreddits);
-  const selectedSubreddit = useSelector(selectCurSubreddit);
+  const dispatch = useDispatch<any>()
+  const subreddits = useSelector(selectSubreddits)
+  const selectedSubreddit = useSelector(selectCurSubreddit)
 
   useEffect(() => {
-    dispatch(fetchSubreddits());
-  }, [dispatch]);
+    dispatch(fetchSubreddits())
+  }, [dispatch])
 
   return (
     <Card className="subreddit-card">
       <h2>Popular Subreddits</h2>
       <ul className="subreddits-list">
-        {subreddits.map((subreddit) => (
+        {subreddits.map(subreddit => (
           <li
             key={subreddit.id}
             className={`${
@@ -29,9 +35,8 @@ const Subreddits = () => {
             <button
               type="button"
               onClick={() => {
-                dispatch(setCurSubreddit(subreddit.display_name));
-                }
-              }
+                dispatch(setCurSubreddit(subreddit.display_name))
+              }}
             >
               <img
                 src={subreddit.icon_img || defaultSubredditImage}
@@ -45,7 +50,7 @@ const Subreddits = () => {
         ))}
       </ul>
     </Card>
-  );
-};
+  )
+}
 
-export default Subreddits;
+export default Subreddits

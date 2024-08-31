@@ -1,13 +1,8 @@
-import React from 'react';
-import Skeleton from 'react-loading-skeleton';
-import './Post.css';
-import './PostLoading.css';
-import {
-  TiArrowUpOutline,
-  TiArrowDownOutline,
-  TiMessage,
-} from 'react-icons/ti';
-import getRandomNumber from '../../utils/getRandomNumber';
+import Skeleton from "react-loading-skeleton"
+import "./Post.css"
+import "./PostLoading.css"
+import { TiArrowUpOutline, TiArrowDownOutline, TiMessage } from "react-icons/ti"
+import getRandomNumber from "../../utils/getRandomNumber"
 
 const PostLoading = () => {
   return (
@@ -58,7 +53,7 @@ const PostLoading = () => {
         </div>
       </div>
     </article>
-  );
-};
+  )
+}
 
-export default PostLoading;
+export default PostLoading

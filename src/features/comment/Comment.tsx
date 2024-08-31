@@ -1,11 +1,10 @@
-import React from 'react';
-import moment from 'moment';
-import ReactMarkdown from 'react-markdown';
-import './Comment.css';
-import Avatar from '../avatar/Avatar';
+import moment from "moment"
+import ReactMarkdown from "react-markdown"
+import "./Comment.css"
+import Avatar from "../avatar/Avatar"
 
 const Comment = (props: any) => {
-  const { comment } = props;
+  const { comment } = props
   return (
     <div className="comment">
       <div className="comment-metadata">
@@ -17,7 +16,7 @@ const Comment = (props: any) => {
       </div>
       <ReactMarkdown>{comment.body}</ReactMarkdown>
     </div>
-  );
-};
+  )
+}
 
-export default Comment;
+export default Comment

@@ -4,5 +4,5 @@
  * @param {number} max
  */
 export default (min: number, max: number) => {
-    return Math.floor(Math.random() * max) + min;
-  };
+  return Math.floor(Math.random() * max) + min
+}
