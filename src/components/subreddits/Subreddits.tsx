@@ -1,18 +1,17 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import Card from "../../components/card/Card"
 import {
   fetchSubreddits,
   selectSubreddits,
 } from "../../features/reddit/subredditSlice"
-import "./Subreddits.css"
 import {
   setCurSubreddit,
   selectCurSubreddit,
 } from "../../features/reddit/redditSlice"
-import defaultSubredditImage from "../../images/reddit-alien.png"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-const Subreddits = () => {
+export default function Subreddits() {
   const dispatch = useDispatch<any>()
   const subreddits = useSelector(selectSubreddits)
   const selectedSubreddit = useSelector(selectCurSubreddit)
@@ -22,35 +21,31 @@ const Subreddits = () => {
   }, [dispatch])
 
   return (
-    <Card className="subreddit-card">
-      <h2>Popular Subreddits</h2>
-      <ul className="subreddits-list">
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-4">Popular Subreddits</h2>
+      <div className="space-y-2">
         {subreddits.map(subreddit => (
-          <li
+          <Button
             key={subreddit.id}
-            className={`${
-              selectedSubreddit === subreddit.url && `selected-subreddit`
-            }`}
+            variant={
+              selectedSubreddit === subreddit.url ? "secondary" : "ghost"
+            }
+            className="w-full justify-start"
+            onClick={() => dispatch(setCurSubreddit(subreddit.display_name))}
           >
-            <button
-              type="button"
-              onClick={() => {
-                dispatch(setCurSubreddit(subreddit.display_name))
-              }}
-            >
-              <img
-                src={subreddit.icon_img || defaultSubredditImage}
-                alt={`${subreddit.display_name}`}
-                className="subreddit-icon"
-                style={{ border: `3px solid ${subreddit.primary_color}` }}
+            <Avatar className="mr-2">
+              <AvatarImage
+                src={subreddit.icon_img}
+                alt={subreddit.display_name}
               />
-              {subreddit.display_name}
-            </button>
-          </li>
+              <AvatarFallback>
+                {subreddit.display_name.slice(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            {subreddit.display_name}
+          </Button>
         ))}
-      </ul>
-    </Card>
+      </div>
+    </div>
   )
 }
-
-export default Subreddits

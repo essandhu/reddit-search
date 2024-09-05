@@ -1,86 +1,39 @@
 import { useState } from "react"
-import Skeleton from "react-loading-skeleton"
-import "./Post.css"
 import {
-  TiArrowUpOutline,
-  TiArrowUpThick,
-  TiArrowDownOutline,
-  TiArrowDownThick,
-  TiMessage,
-} from "react-icons/ti"
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { ArrowUpIcon, ArrowDownIcon, MessageSquareIcon } from "lucide-react"
 import moment from "moment"
 import shortenNumber from "../../utils/shortenNumber"
-import Card from "../../components/card/Card"
 import Comment from "../comment/Comment"
-import Avatar from "../avatar/Avatar"
 
-const Post = (props: any) => {
+export default function Post({ post, onToggleComments }: any) {
   const [voteValue, setVoteValue] = useState(0)
-  const { post, onToggleComments } = props
 
-  /**
-   * @param {number} newValue The new vote value
-   */
   const onHandleVote = (newValue: number) => {
-    if (newValue === voteValue) {
-      setVoteValue(0)
-    } else if (newValue === 1) {
-      setVoteValue(1)
-    } else {
-      setVoteValue(-1)
-    }
-  }
-
-  const renderUpVote = () => {
-    if (voteValue === 1) {
-      return <TiArrowUpThick className="icon-action" />
-    }
-    return <TiArrowUpOutline className="icon-action" />
-  }
-
-  const renderDownVote = () => {
-    if (voteValue === -1) {
-      return <TiArrowDownThick className="icon-action" />
-    }
-    return <TiArrowDownOutline className="icon-action" />
-  }
-
-  const getVoteType = () => {
-    if (voteValue === 1) {
-      return "up-vote"
-    }
-    if (voteValue === -1) {
-      return "down-vote"
-    }
-
-    return ""
+    setVoteValue(newValue === voteValue ? 0 : newValue)
   }
 
   const renderComments = () => {
     if (post.errorComments) {
-      return (
-        <div>
-          <h3>Error loading comments.</h3>
-        </div>
-      )
+      return <div className="text-red-500">Error loading comments.</div>
     }
 
     if (post.loadingComments) {
-      return (
-        <div>
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-        </div>
-      )
+      return <div className="animate-pulse">Loading comments...</div>
     }
 
     if (post.showingComments) {
       return (
-        <div>
-          {post.comments.map((comment: Comment & { id: string }) => (
-            <Comment comment={comment} key={comment.id} />
+        <div className="space-y-4">
+          {post.comments.map((comment: any) => (
+            <Comment key={comment.id} comment={comment} />
           ))}
         </div>
       )
@@ -90,68 +43,60 @@ const Post = (props: any) => {
   }
 
   return (
-    <article key={post.id}>
-      <Card>
-        <div className="post-wrapper">
-          <div className="post-votes-container">
-            <button
-              type="button"
-              className={`icon-action-button up-vote ${
-                voteValue === 1 && "active"
-              }`}
-              onClick={() => onHandleVote(1)}
-              aria-label="Up vote"
-            >
-              {renderUpVote()}
-            </button>
-            <p className={`post-votes-value ${getVoteType()}`}>
-              {shortenNumber(post.ups, 1)}
-            </p>
-            <button
-              type="button"
-              className={`icon-action-button down-vote ${
-                voteValue === -1 && "active"
-              }`}
-              onClick={() => onHandleVote(-1)}
-              aria-label="Down vote"
-            >
-              {renderDownVote()}
-            </button>
-          </div>
-          <div className="post-container">
-            <h2 className="post-title">{post.title}</h2>
-
-            <div className="post-image-container">
-              <img src={post.url} alt="" className="post-image" />
-            </div>
-
-            <div className="post-details">
-              <span className="author-details">
-                <Avatar name={post.author} />
-                <span className="author-username">{post.author}</span>
-              </span>
-              <span>{moment.unix(post.created_utc).fromNow()}</span>
-              <span className="post-comments-container">
-                <button
-                  type="button"
-                  className={`icon-action-button ${
-                    post.showingComments && "showing-comments"
-                  }`}
-                  onClick={() => onToggleComments(post.permalink)}
-                  aria-label="Show comments"
-                >
-                  <TiMessage className="icon-action" />
-                </button>
-                {shortenNumber(post.num_comments, 1)}
-              </span>
-            </div>
-
-            {renderComments()}
-          </div>
+    <Card className="mb-4">
+      <CardHeader className="flex flex-row items-center space-x-4">
+        <Avatar>
+          <AvatarImage
+            src={`https://api.dicebear.com/6.x/initials/svg?seed=${post.author}`}
+          />
+          <AvatarFallback>
+            {post.author.slice(0, 2).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+        <div>
+          <CardTitle>{post.title}</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Posted by u/{post.author} {moment.unix(post.created_utc).fromNow()}
+          </p>
         </div>
-      </Card>
-    </article>
+      </CardHeader>
+      <CardContent>
+        {post.url && (
+          <img
+            src={post.url}
+            alt={post.title}
+            className="w-full h-auto rounded-md mb-4"
+          />
+        )}
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <div className="flex items-center space-x-2">
+          <Button
+            size="sm"
+            variant={voteValue === 1 ? "default" : "ghost"}
+            onClick={() => onHandleVote(1)}
+          >
+            <ArrowUpIcon className="h-4 w-4 mr-1" />
+            {shortenNumber(post.ups, 1)}
+          </Button>
+          <Button
+            size="sm"
+            variant={voteValue === -1 ? "default" : "ghost"}
+            onClick={() => onHandleVote(-1)}
+          >
+            <ArrowDownIcon className="h-4 w-4 mr-1" />
+          </Button>
+        </div>
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => onToggleComments(post.permalink)}
+        >
+          <MessageSquareIcon className="h-4 w-4 mr-1" />
+          {shortenNumber(post.num_comments, 1)} Comments
+        </Button>
+      </CardFooter>
+      {renderComments()}
+    </Card>
   )
 }
-
-export default Post

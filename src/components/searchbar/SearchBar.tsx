@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { setCurSubreddit } from "../../features/reddit/redditSlice"
-import "./SearchBar.css"
-import logoUrl from "../../images/reddit-logo.webp"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { SearchIcon } from "lucide-react"
 
-const SearchBar: React.FC = () => {
+export default function SearchBar() {
   const [query, setQuery] = useState("")
   const dispatch = useDispatch<any>()
   const searchTerm = useSelector((state: any) => state.reddit?.searchTerm)
@@ -15,10 +16,7 @@ const SearchBar: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    //dispatch(setSearchTerm(query));
     dispatch(setCurSubreddit(query))
-    //dispatch(fetchPosts(query));
-    //setQuery('');
   }
 
   useEffect(() => {
@@ -26,25 +24,33 @@ const SearchBar: React.FC = () => {
   }, [searchTerm])
 
   return (
-    <header>
-      <div className="logo">
-        <img src={logoUrl} alt="Reddit Logo" />
-        <h1>Reddit Search</h1>
-      </div>
-      <div className="search-bar">
-        <form className="search=form" onSubmit={handleSubmit}>
-          <input
+    <header className="bg-primary text-primary-foreground py-4">
+      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+        <div className="flex items-center mb-4 md:mb-0">
+          <img
+            src="src\images\reddit-logo.webp"
+            alt="Reddit Logo"
+            className="w-16 h-16 mr-2"
+          />
+          <h1 className="text-3xl font-bold">Reddit Search</h1>
+        </div>
+        <form
+          onSubmit={handleSubmit}
+          className="flex w-full max-w-sm items-center space-x-2"
+        >
+          <Input
             type="text"
             value={query}
             onChange={handleChange}
             placeholder="Search Reddit..."
-            aria-label="Search Reddit"
+            className="flex-grow"
           />
-          <button type="submit">Search</button>
+          <Button type="submit" variant="secondary">
+            <SearchIcon className="mr-2 h-4 w-4" />
+            Search
+          </Button>
         </form>
       </div>
     </header>
   )
 }
-
-export default SearchBar

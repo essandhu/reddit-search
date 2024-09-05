@@ -1,59 +1,26 @@
-import Skeleton from "react-loading-skeleton"
-import "./Post.css"
-import "./PostLoading.css"
-import { TiArrowUpOutline, TiArrowDownOutline, TiMessage } from "react-icons/ti"
-import getRandomNumber from "../../utils/getRandomNumber"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 
-const PostLoading = () => {
+export default function PostLoading() {
   return (
-    <article className="post">
-      <div className="post-votes-container">
-        <button
-          type="button"
-          className="icon-action-button up-vote"
-          aria-label="Up vote"
-        >
-          <TiArrowUpOutline className="icon-action" />
-        </button>
-        <Skeleton className="post-votes-value post-votes-value-loading" />
-        <button
-          type="button"
-          className="icon-action-button down-vote"
-          aria-label="Down vote"
-        >
-          <TiArrowDownOutline className="icon-action" />
-        </button>
-      </div>
-      <div className="post-container">
-        <h3 className="post-title">
-          <Skeleton width={getRandomNumber(100, 200)} />
-        </h3>
-
-        <div className="post-image-container">
-          <Skeleton height={250} />
+    <Card className="mb-4">
+      <CardHeader className="flex flex-row items-center space-x-4">
+        <Skeleton className="h-12 w-12 rounded-full" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-[250px]" />
+          <Skeleton className="h-4 w-[200px]" />
         </div>
-
-        <div className="post-details">
-          <span>
-            <Skeleton width={getRandomNumber(20, 50)} />
-          </span>
-          <span>
-            <Skeleton width={getRandomNumber(50, 100)} />
-          </span>
-          <span className="post-comments-container">
-            <button
-              type="button"
-              className="icon-action-button"
-              aria-label="Show comments"
-            >
-              <TiMessage className="icon-action" />
-            </button>
-            <Skeleton width={getRandomNumber(10, 50)} />
-          </span>
+      </CardHeader>
+      <CardContent>
+        <Skeleton className="h-[200px] w-full rounded-md" />
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <div className="flex items-center space-x-2">
+          <Skeleton className="h-9 w-20" />
+          <Skeleton className="h-9 w-20" />
         </div>
-      </div>
-    </article>
+        <Skeleton className="h-9 w-32" />
+      </CardFooter>
+    </Card>
   )
 }
-
-export default PostLoading
