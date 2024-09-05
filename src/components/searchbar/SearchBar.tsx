@@ -28,9 +28,9 @@ export default function SearchBar() {
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
         <div className="flex items-center mb-4 md:mb-0">
           <img
-            src="src\images\reddit-logo.webp"
+            src="src/images/reddit-alien.svg"
             alt="Reddit Logo"
-            className="w-16 h-16 mr-2"
+            className="w-12 h-12 mr-4"
           />
           <h1 className="text-3xl font-bold">Reddit Search</h1>
         </div>
