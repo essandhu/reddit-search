@@ -1,6 +1,8 @@
 # Reddit Search
 
-View posts and comments from any subreddit with ease
+View posts and comments from any subreddit with ease<br/><br/>
+
+Try it out [here!](https://reddit-search-nine.vercel.app/)
 
 ## Features
 
